@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const express = require('express')
-const { createServer:  createViteServer } = require('vite')
+const { createServer: createViteServer } = require('vite')
 const compression = require('compression')
 const serveStatic = require('serve-static')
 const chalk = require('chalk')
@@ -63,7 +63,7 @@ async function createServer(
       const context = {}
       const appHtml = render(url, context)
 
-      if (context.url && typeof context.url === 'string') {
+      if (context.url) {
         return res.redirect(301, context.url)
       }
 
