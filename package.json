@@ -3,8 +3,8 @@
     "dev": "nodemon server",
     "build": "yarn build:client && yarn build:server",
     "build:client": "vite build --outDir dist/client",
-    "build:server": "vite build --outDir dist/server --ssr src/entry-server.js",
-    "serve": "cross-env NODE_ENV=production node server"
+    "build:server": "vite build --outDir dist/server --ssr src/entry-server.jsx",
+    "serve": "cross-env NODE_ENV=production pm2 start server.js"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -18,6 +18,7 @@
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
     "nodemon": "^2.0.12",
+    "pm2": "^5.1.1",
     "serve-static": "^1.14.1",
     "vite": "^2.5.1"
   }
