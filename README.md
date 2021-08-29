@@ -3,7 +3,7 @@
 
 ## TODO
 - [x] SSR
-- [ ] typescript
+- [x] typescript
 - [ ] data prefetch
 - [ ] client side render & SSR switch
 
