@@ -1,6 +1,7 @@
-const refresh = require('@vitejs/plugin-react-refresh')
+import { defineConfig } from 'vite'
+import refresh from '@vitejs/plugin-react-refresh'
 
-module.exports = {
+export default defineConfig({
   plugins: [ refresh() ],
   esbuild: {
     jsxInject: `import React from 'react';`
@@ -8,4 +9,4 @@ module.exports = {
   build: {
     minify: false
   }
-}
+})
