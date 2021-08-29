@@ -1,8 +1,12 @@
 const fs = require('fs')
 const path = require('path')
 const express = require('express')
-const { createServer: createViteServer } = require('vite')
+const { createServer:  createViteServer } = require('vite')
+const compression = require('compression')
+const serveStatic = require('serve-static')
+const chalk = require('chalk')
 
+const PORT = process.env.PORT || 3000
 const app = express()
 
 const NODE_ENV = process.env.NODE_ENV
@@ -34,9 +38,9 @@ async function createServer(
     })
     app.use(vite.middlewares)
   } else {
-    app.use(require('compression')())
+    app.use(compression())
     app.use(
-      require('serve-static')(resolve('dist/client'), {
+      serveStatic(resolve('dist/client'), {
         index: false
       })
     )
@@ -50,16 +54,16 @@ async function createServer(
       if (!isProd) {
         template = fs.readFileSync(resolve('index.html'), 'utf-8')
         template = await vite.transformIndexHtml(url, template)
-        render = (await vite.ssrLoadModule('/src/entry-server.jsx')).render
+        render = (await vite.ssrLoadModule('src/entry-server.tsx')).render
       } else {
         template = indexProd
-        render = require('./dist/server/entry-server.js').render
+        render = (require(resolve('dist/server/entry-server.js'))).render
       }
 
       const context = {}
       const appHtml = render(url, context)
 
-      if (context.url) {
+      if (context.url && typeof context.url === 'string') {
         return res.redirect(301, context.url)
       }
 
@@ -78,8 +82,8 @@ async function createServer(
 
 if (!isTest) {
   createServer().then(({ app }) =>
-    app.listen(3000, () => {
-      console.log('http://localhost:3000')
+    app.listen(PORT, () => {
+      console.log(chalk.greenBright(`App is listening at http://localhost:${PORT}!`))
     })
   )
 }

@@ -1,9 +1,10 @@
+import React from 'react'
 import { Link, Route, Switch } from "react-router-dom"
 
-const pages = import.meta.globEager('./pages/*.jsx')
+const pages = import.meta.globEager('./pages/*.tsx')
 
 const routes = Object.keys(pages).map(path => {
-  const name = path.match(/\.\/pages\/(.*)\.jsx$/)[1]
+  const name = (path.match(/\.\/pages\/(.*)\.tsx$/) ?? [])[1]
   return {
     name,
     path: name === 'Home' ? '/' : `/${name.toLowerCase()}`,
